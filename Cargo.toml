@@ -1,0 +1,21 @@
+[package]
+name = "override_macro"
+version = "0.1.0"
+authors = ["Takayuki Sato <sttk.xslet@gmail.com>"]
+edition = "2021"
+rust-version = "1.80.1"
+description = "An attribute-like macro for Rust programs to override trait methods with default methods of other traits"
+documentation = "https://docs.rs/override_macro"
+readme = "README.md"
+repository = "https://github.com/sttk/override_macro-rust"
+license = "MIT"
+keywords = ["override", "method", "trait", "inherit", "macro"]
+categories = ["development-tools"]
+
+[dependencies]
+proc-macro2 = "1.0"
+syn = { version = "2.0", features=["full"] }
+quote = "1.0"
+
+[lib]
+proc-macro = true
