@@ -1,0 +1,7 @@
+error: custom attribute panicked
+  --> src/compile_errors/e07_override_with_same_trait.rs:10:1
+   |
+10 | #[override_with(Trait07)]
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: message: The same trait as the impl trait was found in the arguments: Trait07

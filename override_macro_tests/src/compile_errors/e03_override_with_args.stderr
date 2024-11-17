@@ -1,0 +1,15 @@
+error: custom attribute panicked
+  --> src/compile_errors/e03_override_with_args.rs:12:1
+   |
+12 | #[override_with()]
+   | ^^^^^^^^^^^^^^^^^^
+   |
+   = help: message: `override_with` attribute-macro expected trait paths as arguments
+
+error: custom attribute panicked
+  --> src/compile_errors/e03_override_with_args.rs:18:1
+   |
+18 | #[override_with(a())]
+   | ^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: message: `override_with` attribute-macro expected trait paths as arguments

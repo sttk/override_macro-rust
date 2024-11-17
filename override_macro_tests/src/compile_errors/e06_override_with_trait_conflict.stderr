@@ -1,0 +1,15 @@
+error: custom attribute panicked
+  --> src/compile_errors/e06_override_with_trait_conflict.rs:25:1
+   |
+25 | #[override_with(Trait06B)]
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: message: There are multiple traits matching with: Trait06B
+
+error: custom attribute panicked
+  --> src/compile_errors/e06_override_with_trait_conflict.rs:31:1
+   |
+31 | #[override_with(Trait06A)]
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: message: There are multiple traits matching with: Trait06C

@@ -1,26 +1,15 @@
-use override_macro::my_attr_macro;
+mod t01_override_for_struct;
+mod t02_skip_trait_function;
+mod t03_skip_implemented_method;
+mod t04_override_for_trait;
+mod t05_override_for_trait_impl;
+mod t06_override_for_trait_where;
+mod t07_use_mod_path_for_trait_conflict;
+mod t08_use_mod_alias_for_trait_conflict;
+mod t09_trait_method_conflict;
 
-#[my_attr_macro]
-pub trait Trait0 {
-    fn method00(&self) -> bool;
-}
-
-#[derive(Debug)]
-pub struct Struct0 {}
-
-impl Trait0 for Struct0 {
-    fn method00(&self) -> bool {
-        true
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test() {
-        let s0 = Struct0 {};
-        assert!(s0.method00());
-    }
+#[test]
+fn compile_error_check() {
+    let t = trybuild::TestCases::new();
+    t.compile_fail("src/compile_errors/*.rs");
 }

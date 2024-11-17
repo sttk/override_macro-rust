@@ -1,0 +1,7 @@
+error: custom attribute panicked
+ --> src/compile_errors/e04_override_with_on_other_item.rs:6:1
+  |
+6 | #[override_with(Trait04A)]
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: message: `override_with` attribute-macro must be attached to a `impl` block
