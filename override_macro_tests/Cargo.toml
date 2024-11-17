@@ -5,3 +5,6 @@ edition = "2021"
 
 [dependencies]
 override_macro = { path = ".." }
+
+[dev-dependencies]
+trybuild = "1.0"

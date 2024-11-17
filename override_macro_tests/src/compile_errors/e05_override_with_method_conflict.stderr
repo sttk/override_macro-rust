@@ -1,0 +1,7 @@
+error: custom attribute panicked
+  --> src/compile_errors/e05_override_with_method_conflict.rs:26:1
+   |
+26 | #[override_with(Trait05B, Trait05C)]
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: message: The method `method0` is implemented in multiple traits: Trait05B, Trait05C

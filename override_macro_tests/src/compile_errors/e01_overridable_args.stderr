@@ -1,0 +1,31 @@
+error: custom attribute panicked
+ --> src/compile_errors/e01_overridable_args.rs:3:1
+  |
+3 | #[overridable(a)]
+  | ^^^^^^^^^^^^^^^^^
+  |
+  = help: message: `overridable` attribute-macro can take an argument like `mod = module::path` or empty
+
+error: custom attribute panicked
+ --> src/compile_errors/e01_overridable_args.rs:6:1
+  |
+6 | #[overridable(mod a)]
+  | ^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: message: `overridable` attribute-macro can take an argument like `mod = module::path` or empty
+
+error: custom attribute panicked
+ --> src/compile_errors/e01_overridable_args.rs:9:1
+  |
+9 | #[overridable(mod =)]
+  | ^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: message: `overridable` attribute-macro can take an argument like `mod = module::path` or empty
+
+error: custom attribute panicked
+  --> src/compile_errors/e01_overridable_args.rs:12:1
+   |
+12 | #[overridable(mod = a())]
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: message: `overridable` attribute-macro can take an argument like `mod = module::path` or empty

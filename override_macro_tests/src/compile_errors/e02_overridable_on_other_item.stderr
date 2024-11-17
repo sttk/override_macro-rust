@@ -1,0 +1,7 @@
+error: custom attribute panicked
+ --> src/compile_errors/e02_overridable_on_other_item.rs:8:1
+  |
+8 | #[overridable]
+  | ^^^^^^^^^^^^^^
+  |
+  = help: message: `overridable` attribute-macro must be attached to a trait.
