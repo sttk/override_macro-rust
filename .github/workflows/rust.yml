@@ -19,5 +19,6 @@ jobs:
         with:
           toolchain: ${{ matrix.rustver }}
       - run: |
+          cargo test
           cd override_macro_tests
           cargo test

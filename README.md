@@ -18,38 +18,52 @@ First, by using `overridable` attribute macro, collects trait informations whose
 The argument of this attribute macro is to specify the module path.
 This argument is optional but it is better to specify it because the trait name may be conflict to other traits.
 
-```rust
-use override_macro::overridable;
-
-#[overridable(mod = crate::module::path01)]
-trait Trait1 {
-    fn method1(&self, b: bool) -> u64;
-}
-```
-```rust
-use override_macro::overridable;
-
-#[overridable(mod = crate::module::path02)]
-trait Trait2 {
-    fn method1(&self, b: bool) -> u64 {
-        ...
-    }
-}
-```
-
 Next, by using `override_with` attribute macro, adds overridiing methods of the target trait for a struct or a trait.
 
 The arguments of this attribute-macro are paths of traits having overriding methods.
 This attribute-macro searches for methods with the same sigunature to the methods in the target trait from the traits passed as the arguments, and then adds these method callings to the target trait.
 
 ```rust
-use override_macro::override_with;
+use override_macro::{overridable, override_with};
 
-struct StructA;
-impl Trait02 for StructA {}
+#[overridable]
+trait Trait0 {
+    fn method0(&self) -> bool;
+    fn method1(&self, b: bool) -> u64;
+}
 
-#[override_with(crate::module::path02::Trait2)]
-impl Trait01 for StructA {}
+mod module_a {
+    use override_macro::{overridable, override_with};
+
+    #[overridable(mod = module_a)]
+    pub trait Trait1 {
+        fn method0(&self) -> bool { true }
+    }
+
+    pub mod module_b {
+        use override_macro::{overridable, override_with};
+
+        #[overridable(mod = module_a::module_b)]
+        pub trait Trait2 {
+            fn method1(&self, _b: bool) -> u64 { 123 }
+        }
+    }
+}
+
+struct Struct0;
+impl module_a::Trait1 for Struct0 {}
+impl module_a::module_b::Trait2 for Struct0 {}
+
+#[override_with(module_a::Trait1, module_a::module_b::Trait2)]
+impl Trait0 for Struct0 {
+    // The following method is added automatically by this attribute-macro
+    // fn method0(&self) -> bool {
+    //     module_a::Trait1::method0(self)
+    // }
+    // fn method1(&self, _b: bool) -> u64 {
+    //     module_a::module_b::Trait1::method1(self, _b)
+    // }
+}
 ```
 
 ## Supporting Rust versions
