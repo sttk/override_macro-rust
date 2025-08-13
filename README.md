@@ -1,8 +1,8 @@
-# [override_macro][repo-url] [![crate.io][crateio-img]][crateio-url] [![doc.rs][docrs-img]][docrs-url] [![CI Status][ci-img]][ci-url] [![MIT License][mit-img]][mit-url]
+# [override_macro][repo-url] [![crates.io][cratesio-img]][cratesio-url] [![doc.rs][docrs-img]][docrs-url] [![CI Status][ci-img]][ci-url] [![MIT License][mit-img]][mit-url]
 
 This crate provides attribute-like macros to override trait methods with other traits for a structs or another trait.
 
-## Install
+## Installation
 
 In `Cargo.toml`, write this crate as a dependency.
 
@@ -71,24 +71,27 @@ impl Trait0 for Struct0 {
 This crate supports Rust 1.80.1 or later.
 
 ```sh
-% cargo msrv --no-check-feedback
-Fetching index
-Determining the Minimum Supported Rust Version (MSRV) for toolchain x86_64-apple-darwin
-Using check command cargo check
-   Finished The MSRV is: 1.80.1   ████████████████████████████████████████████ 00:00:36
+% cargo msrv find
+  [Meta]   cargo-msrv 0.18.4
+       ~~~~~~(omission)~~~~~
+Result:
+   Considered (min … max):   Rust 1.56.1 … Rust 1.89.0
+   Search method:            bisect
+   MSRV:                     1.80.1
+   Target:                   x86_64-apple-darwin
 ```
 
 ## License
 
-Copyright (C) 2024 Takayuki Sato
+Copyright (C) 2024-2025 Takayuki Sato
 
 This program is free software under MIT License.<br>
 See the file LICENSE in this distribution for more details.
 
 
 [repo-url]: https://github.com/sttk/override_macro-rust
-[crateio-img]: https://img.shields.io/badge/crate.io-ver.0.1.0-fc8d62?logo=rust
-[crateio-url]: https://crates.io/crates/override_macro
+[cratesio-img]: https://img.shields.io/badge/crates.io-ver.0.1.0-fc8d62?logo=rust
+[cratesio-url]: https://crates.io/crates/override_macro
 [docrs-img]: https://img.shields.io/badge/doc.rs-override_macro-66c2a5?logo=docs.rs
 [docrs-url]: https://docs.rs/override_macro
 [ci-img]: https://github.com/sttk/override_macro-rust/actions/workflows/rust.yml/badge.svg?branch=main
