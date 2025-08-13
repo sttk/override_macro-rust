@@ -31,6 +31,7 @@ struct OverridableMethod {
     sig: String,
     call: String,
     has_impl: bool,
+    is_async: bool,
 }
 
 pub fn collect_trait_info(data: &syn_data_acc::OverridableDataAcc) {
@@ -58,12 +59,13 @@ fn register_trait(
 
     let mut method_map = HashMap::<String, OverridableMethod>::new();
 
-    data.for_each_method_registration(|name, sig, call, has_impl, key| {
+    data.for_each_method_registration(|name, sig, call, has_impl, key, is_async| {
         let m = OverridableMethod {
             name,
             sig,
             call,
             has_impl,
+            is_async,
         };
         method_map.insert(key, m);
     });
@@ -134,7 +136,12 @@ pub fn override_trait_methods(data: &mut syn_data_acc::OverrideWithDataAcc) {
                     continue;
                 }
 
-                overriding_methods.push(format!("{} {{ {}::{} }}", m.sig, t_path, m.call));
+                if m.is_async {
+                    overriding_methods
+                        .push(format!("{} {{ {}::{}.await }}", m.sig, t_path, m.call));
+                } else {
+                    overriding_methods.push(format!("{} {{ {}::{} }}", m.sig, t_path, m.call));
+                }
             }
         }
 

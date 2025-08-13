@@ -127,7 +127,7 @@ impl OverridableDataAcc {
 
     pub fn for_each_method_registration<F>(&self, mut register: F)
     where
-        F: FnMut(String, String, String, bool, String),
+        F: FnMut(String, String, String, bool, String, bool),
     {
         for ti in &self.trait_ast.items {
             match ti {
@@ -138,7 +138,8 @@ impl OverridableDataAcc {
                         let call = make_method_call(&f.sig);
                         let has_impl = f.default.is_some();
                         let search_key = make_method_search_key(&f.sig);
-                        register(name, sig, call, has_impl, search_key);
+                        let is_async = f.sig.asyncness.is_some();
+                        register(name, sig, call, has_impl, search_key, is_async);
                     }
                 }
                 _ => {}
