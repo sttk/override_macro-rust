@@ -77,7 +77,7 @@
 use proc_macro::TokenStream;
 
 mod logic;
-mod syn_dax;
+mod syn_data_acc;
 
 /// Collects trait informations whose methods can override other trait methods, or can be overriden
 /// with other trait methods.
@@ -108,8 +108,8 @@ mod syn_dax;
 /// ```
 #[proc_macro_attribute]
 pub fn overridable(args: TokenStream, item: TokenStream) -> TokenStream {
-    let dax = syn_dax::OverridableDax::new(args, item.clone());
-    logic::collect_trait_info(&dax);
+    let data = syn_data_acc::OverridableDataAcc::new(args, item.clone());
+    logic::collect_trait_info(&data);
 
     item
 }
@@ -171,8 +171,8 @@ pub fn overridable(args: TokenStream, item: TokenStream) -> TokenStream {
 /// ```
 #[proc_macro_attribute]
 pub fn override_with(args: TokenStream, item: TokenStream) -> TokenStream {
-    let mut dax = syn_dax::OverrideWithDax::new(args, item.clone());
-    logic::override_trait_methods(&mut dax);
+    let mut data = syn_data_acc::OverrideWithDataAcc::new(args, item.clone());
+    logic::override_trait_methods(&mut data);
 
-    dax.output_result(item)
+    data.output_result(item)
 }

@@ -32,12 +32,12 @@ impl syn::parse::Parse for OverridableArgs {
     }
 }
 
-pub struct OverridableDax {
+pub struct OverridableDataAcc {
     args_ast: Option<OverridableArgs>,
     trait_ast: syn::ItemTrait,
 }
 
-impl OverridableDax {
+impl OverridableDataAcc {
     pub fn new(args: TokenStream, item: TokenStream) -> Self {
         let trait_ast = match syn::parse::<syn::ItemTrait>(item) {
             Ok(ast) => ast,
@@ -241,14 +241,14 @@ impl syn::parse::Parse for OverrideWithArgs {
     }
 }
 
-pub struct OverrideWithDax {
+pub struct OverrideWithDataAcc {
     arg_trait_paths: Vec<syn::Path>,
     impl_trait_path: syn::Path,
     impl_method_keys: Vec<String>,
     overriding_method_impls: Vec<String>,
 }
 
-impl OverrideWithDax {
+impl OverrideWithDataAcc {
     pub fn new(args: TokenStream, item: TokenStream) -> Self {
         let arg_trait_paths = match syn::parse::<OverrideWithArgs>(args) {
             Ok(args) => args.trait_paths,
