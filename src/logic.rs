@@ -2,7 +2,7 @@
 // This program is free software under MIT License.
 // See the file LICENSE in this distribution for more details.
 
-use crate::syn_dax;
+use crate::syn_data_acc;
 
 use std::collections::HashMap;
 use std::sync::{LazyLock, RwLock};
@@ -33,14 +33,14 @@ struct OverridableMethod {
     has_impl: bool,
 }
 
-pub fn collect_trait_info(dax: &syn_dax::OverridableDax) {
-    let trait_name = dax.get_trait_name();
-    let mod_path = dax.get_module_path();
-    let trait_index = register_trait(dax, &trait_name, &mod_path);
+pub fn collect_trait_info(data: &syn_data_acc::OverridableDataAcc) {
+    let trait_name = data.get_trait_name();
+    let mod_path = data.get_module_path();
+    let trait_index = register_trait(data, &trait_name, &mod_path);
 
     let mut trait_map = TRAIT_MAP.write().unwrap();
 
-    for key in dax.list_trait_search_keys() {
+    for key in data.list_trait_search_keys() {
         match trait_map.get_mut(&key) {
             Some(_) => trait_map.insert(key, FoundTrait::Conflict),
             None => trait_map.insert(key, FoundTrait::Found(trait_index)),
@@ -49,7 +49,7 @@ pub fn collect_trait_info(dax: &syn_dax::OverridableDax) {
 }
 
 fn register_trait(
-    dax: &syn_dax::OverridableDax,
+    data: &syn_data_acc::OverridableDataAcc,
     trait_name: &str,
     mod_path: &Option<String>,
 ) -> usize {
@@ -58,7 +58,7 @@ fn register_trait(
 
     let mut method_map = HashMap::<String, OverridableMethod>::new();
 
-    dax.for_each_method_registration(|name, sig, call, has_impl, key| {
+    data.for_each_method_registration(|name, sig, call, has_impl, key| {
         let m = OverridableMethod {
             name,
             sig,
@@ -83,17 +83,17 @@ struct ArgumentTrait {
     index: usize,
 }
 
-pub fn override_trait_methods(dax: &mut syn_dax::OverrideWithDax) {
+pub fn override_trait_methods(data: &mut syn_data_acc::OverrideWithDataAcc) {
     let trait_map = TRAIT_MAP.read().unwrap();
 
-    let impl_trait_index = dax
+    let impl_trait_index = data
         .get_impl_trait(|keys| Some(find_trait(&trait_map, keys)))
         .unwrap();
 
     let trait_vec = TRAIT_VEC.read().unwrap();
     let impl_trait = &trait_vec[impl_trait_index];
 
-    let arg_traits = dax.list_argument_traits(|keys, path| {
+    let arg_traits = data.list_argument_traits(|keys, path| {
         let index = find_trait(&trait_map, keys);
         if index == impl_trait_index {
             panic!(
@@ -104,7 +104,7 @@ pub fn override_trait_methods(dax: &mut syn_dax::OverrideWithDax) {
         Some(ArgumentTrait { path, index })
     });
 
-    let impl_method_keys = dax.list_impl_method_keys();
+    let impl_method_keys = data.list_impl_method_keys();
 
     let mut overriding_methods = Vec::<String>::new();
 
@@ -147,7 +147,7 @@ pub fn override_trait_methods(dax: &mut syn_dax::OverrideWithDax) {
         }
     }
 
-    dax.set_overriding_method_impls(overriding_methods);
+    data.set_overriding_method_impls(overriding_methods);
 }
 
 fn find_trait(trait_map: &HashMap<String, FoundTrait>, search_keys: &[String]) -> usize {
