@@ -1,4 +1,4 @@
-// Copyright (C) 2024 Takayuki Sato. All Rights Reserved.
+// Copyright (C) 2024-2025 Takayuki Sato. All Rights Reserved.
 // This program is free software under MIT License.
 // See the file LICENSE in this distribution for more details.
 
@@ -11,7 +11,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! override_macro = "0.1.0"
+//! override_macro = "0.1.1"
 //! ```
 //!
 //! ## Usage

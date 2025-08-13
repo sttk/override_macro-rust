@@ -8,7 +8,7 @@ In `Cargo.toml`, write this crate as a dependency.
 
 ```toml
 [dependencies]
-override_macro = "0.1.0"
+override_macro = "0.1.1"
 ```
 
 ## Usage
@@ -90,7 +90,7 @@ See the file LICENSE in this distribution for more details.
 
 
 [repo-url]: https://github.com/sttk/override_macro-rust
-[cratesio-img]: https://img.shields.io/badge/crates.io-ver.0.1.0-fc8d62?logo=rust
+[cratesio-img]: https://img.shields.io/badge/crates.io-ver.0.1.1-fc8d62?logo=rust
 [cratesio-url]: https://crates.io/crates/override_macro
 [docrs-img]: https://img.shields.io/badge/doc.rs-override_macro-66c2a5?logo=docs.rs
 [docrs-url]: https://docs.rs/override_macro
