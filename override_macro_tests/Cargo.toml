@@ -7,4 +7,5 @@ edition = "2021"
 override_macro = { path = ".." }
 
 [dev-dependencies]
+tokio = { version = "1", features = ["rt", "macros"] }
 trybuild = "1.0"

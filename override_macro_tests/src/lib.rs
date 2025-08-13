@@ -7,6 +7,7 @@ mod t06_override_for_trait_where;
 mod t07_use_mod_path_for_trait_conflict;
 mod t08_use_mod_alias_for_trait_conflict;
 mod t09_trait_method_conflict;
+mod t10_async_method;
 
 #[test]
 fn compile_error_check() {
