@@ -3,7 +3,6 @@
 // See the file LICENSE in this distribution for more details.
 
 use proc_macro::TokenStream;
-use syn;
 
 use quote::ToTokens;
 use std::ops::{Deref, Fn, FnMut};
@@ -130,19 +129,16 @@ impl OverridableDataAcc {
         F: FnMut(String, String, String, bool, String, bool),
     {
         for ti in &self.trait_ast.items {
-            match ti {
-                syn::TraitItem::Fn(f) => {
-                    if is_method(&f.sig) {
-                        let name = f.sig.ident.to_string();
-                        let sig = f.sig.to_token_stream().to_string();
-                        let call = make_method_call(&f.sig);
-                        let has_impl = f.default.is_some();
-                        let search_key = make_method_search_key(&f.sig);
-                        let is_async = f.sig.asyncness.is_some();
-                        register(name, sig, call, has_impl, search_key, is_async);
-                    }
+            if let syn::TraitItem::Fn(f) = ti {
+                if is_method(&f.sig) {
+                    let name = f.sig.ident.to_string();
+                    let sig = f.sig.to_token_stream().to_string();
+                    let call = make_method_call(&f.sig);
+                    let has_impl = f.default.is_some();
+                    let search_key = make_method_search_key(&f.sig);
+                    let is_async = f.sig.asyncness.is_some();
+                    register(name, sig, call, has_impl, search_key, is_async);
                 }
-                _ => {}
             }
         }
     }
@@ -150,9 +146,8 @@ impl OverridableDataAcc {
 
 fn is_method(f_sig: &syn::Signature) -> bool {
     for fn_arg in &f_sig.inputs {
-        match fn_arg {
-            syn::FnArg::Receiver(_) => return true,
-            _ => {}
+        if let syn::FnArg::Receiver(_) = fn_arg {
+            return true;
         }
     }
 
@@ -161,7 +156,7 @@ fn is_method(f_sig: &syn::Signature) -> bool {
 
 fn make_method_call(f_sig: &syn::Signature) -> String {
     let mut call_string = f_sig.ident.to_string();
-    call_string.push_str("(");
+    call_string.push('(');
 
     let mut iter = f_sig.inputs.iter();
     if let Some(fn_arg) = iter.next() {
@@ -183,14 +178,14 @@ fn make_method_call(f_sig: &syn::Signature) -> String {
             }
         }
     }
-    call_string.push_str(")");
+    call_string.push(')');
 
     call_string
 }
 
 fn make_method_search_key(f_sig: &syn::Signature) -> String {
     let mut search_key = f_sig.ident.to_string();
-    search_key.push_str("(");
+    search_key.push('(');
 
     let mut iter = f_sig.inputs.iter();
     if let Some(fn_arg) = iter.next() {
@@ -216,7 +211,7 @@ fn make_method_search_key(f_sig: &syn::Signature) -> String {
             }
         }
     }
-    search_key.push_str(")");
+    search_key.push(')');
 
     search_key
 }
@@ -269,20 +264,17 @@ impl OverrideWithDataAcc {
             let mut impl_method_keys = Vec::<String>::new();
 
             for ii in &item_ast.items {
-                match ii {
-                    syn::ImplItem::Fn(f) => {
-                        impl_method_keys.push(make_method_search_key(&f.sig));
-                    }
-                    _ => {}
+                if let syn::ImplItem::Fn(f) = ii {
+                    impl_method_keys.push(make_method_search_key(&f.sig));
                 }
             }
 
-            return Self {
+            Self {
                 arg_trait_paths,
                 impl_trait_path,
                 impl_method_keys,
                 overriding_method_impls: Vec::new(),
-            };
+            }
         } else {
             panic!("Not trait implementation.");
         }
@@ -374,7 +366,7 @@ impl OverrideWithDataAcc {
         let mut impl_ast = syn::parse::<syn::ItemImpl>(item).unwrap();
 
         for method in &self.overriding_method_impls {
-            let fn_ast = syn::parse_str::<syn::ImplItemFn>(&method).unwrap();
+            let fn_ast = syn::parse_str::<syn::ImplItemFn>(method).unwrap();
             impl_ast.items.push(syn::ImplItem::Fn(fn_ast));
         }
 

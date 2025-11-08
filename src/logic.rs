@@ -115,7 +115,7 @@ pub fn override_trait_methods(data: &mut syn_data_acc::OverrideWithDataAcc) {
             continue;
         }
 
-        if impl_method_keys.contains(&key) {
+        if impl_method_keys.contains(key) {
             continue;
         }
 
