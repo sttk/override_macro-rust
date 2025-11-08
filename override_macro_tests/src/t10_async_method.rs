@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use override_macro::{overridable, override_with};
 
 #[overridable]
