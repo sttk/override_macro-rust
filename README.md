@@ -68,31 +68,28 @@ impl Trait0 for Struct0 {
 
 ## Supporting Rust versions
 
-This crate supports Rust 1.80.1 or later.
+This crate supports Rust 1.85.1 or later.
 
 ```sh
 % ./build.sh msrv
-  [Meta]   cargo-msrv 0.18.4
+  [Meta]   cargo-msrv 0.19.3
 
-Compatibility Check #1: Rust 1.74.1
-  [FAIL]   Is incompatible
-
-Compatibility Check #2: Rust 1.83.0
+Compatibility Check #1: Rust 1.91.1
   [OK]     Is compatible
 
-Compatibility Check #3: Rust 1.78.0
-  [FAIL]   Is incompatible
-
-Compatibility Check #4: Rust 1.80.1
+Compatibility Check #2: Rust 1.88.0
   [OK]     Is compatible
 
-Compatibility Check #5: Rust 1.79.0
-  [FAIL]   Is incompatible
+Compatibility Check #3: Rust 1.86.0
+  [OK]     Is compatible
+
+Compatibility Check #4: Rust 1.85.1
+  [OK]     Is compatible
 
 Result:
-   Considered (min … max):   Rust 1.56.1 … Rust 1.91.0
+   Considered (min … max):   Rust 1.85.1 … Rust 1.97.1
    Search method:            bisect
-   MSRV:                     1.80.1
+   MSRV:                     1.85.1
    Target:                   x86_64-apple-darwin
 ```
 
